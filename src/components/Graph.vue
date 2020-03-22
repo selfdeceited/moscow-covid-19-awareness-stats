@@ -60,7 +60,7 @@ export default {
                 color: '#fff',
                 background: '#775DD0',
               },
-              text: 'You are here',
+              text: 'Latest data available',
             },
           }],
         },

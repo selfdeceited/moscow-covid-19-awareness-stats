@@ -45,12 +45,10 @@ const formatDataByRegression = (data, regressionData) => {
 
 const getExtendedPredictions = (data, regressionData, regressionPoints, predictOnDays) => {
   let lastDate = new Date(data[data.length - 1].date.getTime());
-  console.log(`last date is ${lastDate}`);
   const futureData = getPredictions(regressionData, regressionPoints, predictOnDays);
   const extendedPredictions = [...Array(predictOnDays).keys()].map((x, i) => {
     lastDate = new Date(lastDate.getTime());
     const onDate = new Date(lastDate.setDate(lastDate.getDate() + 1));
-    console.log(`onDate date is ${onDate}`);
     return {
       date: onDate,
       number: futureData[i][1],
