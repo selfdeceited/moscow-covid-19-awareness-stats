@@ -29,8 +29,8 @@ const moscowDataFor2Weeks = [
   { date: new Date(Date.parse('03.19.2019')), number: 98 },
   { date: new Date(Date.parse('03.20.2019')), number: 131 },
   { date: new Date(Date.parse('03.21.2019')), number: 137 },
+  { date: new Date(Date.parse('03.22.2019')), number: 191 },
   // no new data by now
-  { date: new Date(Date.parse('03.22.2019')), number: 0 },
   { date: new Date(Date.parse('03.23.2019')), number: 0 },
   { date: new Date(Date.parse('03.24.2019')), number: 0 },
   { date: new Date(Date.parse('03.25.2019')), number: 0 },

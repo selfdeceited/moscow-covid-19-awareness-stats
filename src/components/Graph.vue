@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="covid-graph">
-      <apexchart width="900" type="line"
+      <apexchart width="100%" type="line"
         :options="chartOptions"
         :series="series">
       </apexchart>
@@ -80,10 +80,6 @@ export default {
             left: 20,
           },
         },
-        title: {
-          text: 'Moscow COVID-19 prediction data',
-          align: 'left',
-        },
       },
       series: [{
         name: 'documented',
@@ -122,6 +118,13 @@ a {
 .covid-graph {
   width: 80%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0;
+}
+@media screen and (max-width: 980px) {
+  .covid-graph {
+    width: 95%;
+    margin: 0 auto;
+    padding: 0;
+  }
 }
 </style>
