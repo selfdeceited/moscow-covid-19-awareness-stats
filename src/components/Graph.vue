@@ -3,7 +3,7 @@
     <div>
     <graph-line-dateblock
             :width="900"
-            :height="700"
+            :height="550"
             :axis-min="0"
             :axis-max="2000"
             :axis-reverse="false"
