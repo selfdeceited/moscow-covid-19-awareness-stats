@@ -1,21 +1,10 @@
 <template>
   <div>
-    <div>
-    <graph-line-dateblock
-            :width="900"
-            :height="550"
-            :axis-min="0"
-            :axis-max="2000"
-            :axis-reverse="false"
-            :axis-format="'dd.MM'"
-            :axis-interval="1000 * 60 * 60 * 24"
-            :labels="labels"
-            :values="values">
-        <note>note</note>
-        <legends :names="names"></legends>
-        <tooltip :names="names" :position="'right'"></tooltip>
-        <guideline :tooltip-x="true" :tooltip-y="true"></guideline>
-    </graph-line-dateblock>
+    <div class="covid-graph">
+      <apexchart width="900" type="line"
+        :options="chartOptions"
+        :series="series">
+      </apexchart>
     </div>
   </div>
 </template>
@@ -23,22 +12,27 @@
 <script>
 
 import realData from '../services/stats';
-import { getRegressionBasedOnData, formatDataByRegression, getExtendedPredictions } from '../services/calculateStats';
+import {
+  getRegressionBasedOnData, formatDataByRegression, getExtendedPredictions, getLastDate,
+} from '../services/calculateStats';
 
 const virusAverageAdjustmentDays = 7;
 const predictOnDays = 7;
 
 const regressionData = getRegressionBasedOnData(realData);
 const interpolated = formatDataByRegression(realData, regressionData);
-const futureData = getExtendedPredictions(realData, regressionData, predictOnDays);
-const dataWithPredictions = interpolated.concat(futureData);
+// eslint-disable-next-line max-len
+const futureData = getExtendedPredictions(realData, regressionData, interpolated.regressionPoints, predictOnDays);
+const dataWithPredictions = interpolated.graphData.concat(futureData);
+
+const lastDate = getLastDate(realData);
 
 /*
   take data from now, consider it an up-to-date data for `virusAverageAdjustmentDays` ago
   since detected cases only shown that person got sick N days ago.
 */
 
-const undetected = interpolated.map((x, i) => {
+const undetected = interpolated.graphData.map((x, i) => {
   const undetectedData = dataWithPredictions[i + virusAverageAdjustmentDays];
   const totalNumber = undetectedData ? undetectedData.number : 0;
   return { date: x.date, number: totalNumber };
@@ -49,13 +43,60 @@ export default {
   props: { },
   data() {
     return {
-      labels: realData.map((x) => x.date),
-      values: [
-        realData.map((x) => x.number),
-        interpolated.map((x) => x.number),
-        undetected.map((x) => x.number),
-      ],
-      names: ['documented', 'documented after regression calc', 'predictions on currently sick people'],
+      chartOptions: {
+        chart: {
+          height: 350,
+          type: 'line',
+          id: 'areachart-2',
+        },
+        annotations: {
+          xaxis: [{
+            x: lastDate.getTime(),
+            strokeDashArray: 0,
+            borderColor: '#775DD0',
+            label: {
+              borderColor: '#775DD0',
+              style: {
+                color: '#fff',
+                background: '#775DD0',
+              },
+              text: 'You are here',
+            },
+          }],
+        },
+        xaxis: {
+          type: 'datetime',
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        labels: realData.map((x) => x.date.getTime()),
+        stroke: {
+          curve: 'straight',
+        },
+        grid: {
+          padding: {
+            right: 30,
+            left: 20,
+          },
+        },
+        title: {
+          text: 'Moscow COVID-19 prediction data',
+          align: 'left',
+        },
+      },
+      series: [{
+        name: 'documented',
+        data: realData.map((x) => x.number),
+      },
+      {
+        name: 'documented - after interpolation',
+        data: interpolated.graphData.map((x) => x.number),
+      },
+      {
+        name: 'predictions on currently sick people',
+        data: undetected.map((x) => x.number),
+      }],
     };
   },
 };
@@ -76,5 +117,11 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.covid-graph {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
 }
 </style>

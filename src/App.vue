@@ -2,7 +2,6 @@
   <div>
     <GithubCorner/>
     <div id="app">
-      <h1>Moscow COVID-19 prediction data</h1>
       <Graph/>
       <br/>
       <footer>
