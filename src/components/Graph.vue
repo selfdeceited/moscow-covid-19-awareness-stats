@@ -44,6 +44,12 @@ export default {
   data() {
     return {
       chartOptions: {
+        legend: {
+          offSetY: -5,
+          markers: {
+            offSetY: -5,
+          },
+        },
         chart: {
           height: 350,
           type: 'line',

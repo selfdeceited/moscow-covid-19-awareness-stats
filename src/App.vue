@@ -16,17 +16,14 @@
 
 <footer id="footer">
   <div class="container">
-    <ul class="icons">
+    <ul>
       <li>
-        Based on: <a href="https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca">Coronavirus: Why You Must Act Now</a>
-      </li>
-      <li>
+        Based on: <a href="https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca">Coronavirus: Why You Must Act Now</a> |
         Moscow data source: <a href="https://yandex.com/web-maps/covid19">Yandex.Maps</a>
       </li>
     </ul>
-    <ul class="icons">
-      <li>2020, Anton Ryzhikov</li>
-      <li><a href="https://github.com/selfdeceited/moscow-covid-19-awareness-stats">Fork me on Github</a></li>
+    <ul>
+      <li>2020, Anton Ryzhikov | <a href="https://github.com/selfdeceited/moscow-covid-19-awareness-stats">Fork me on Github</a></li>
     </ul>
   </div>
 </footer>
